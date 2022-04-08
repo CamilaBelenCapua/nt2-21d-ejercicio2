@@ -14,7 +14,7 @@
 
 <div class="container-fluid mt-3" id="app">
     <input type="text" class="form-control"  pattern="[a-zA-Z]+" v-model="criterioPorNombre"
-        placeholder="Ingresar nombre o apellido">
+        placeholder="Ingresar nombre o apellido...">
 
     <br>
 
@@ -34,6 +34,7 @@
                         <h5 class="card-title">{{getNombreCompleto(persona)}}</h5>
                         <p class="card-text">dni {{persona.dni}}</p>
                         <a href="#" class="card-link">{{persona.correo}}</a>
+                        <img :src="persona.foto" width="50">
                     </div>
                 </div>
             </div>
@@ -61,35 +62,47 @@
                     nombre: "Daniel",
                     apellido: "Sanchez",
                     correo: "danielsanchez68@hotmail.com",
-                    dni: "20442873"
+                    dni: "20442873",
+                    foto: "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/12_avatar-128.png"
                 },
                 {
                     nombre: "Camila Belén",
                     apellido: "Capua",
                     correo: "camilabelencapua@gmail.com",
-                    dni: "35894524"
+                    dni: "35894524",
+                    foto: "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/9_avatar-128.png"
                 },
                 {
                     nombre: "Agustin",
                     apellido: "Lopez",
                     correo: "ag_lopez@gmail.com",
-                    dni: "38843318"
+                    dni: "38843318",
+                    foto: "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/7_avatar-128.png"
                 },
                 {
                     nombre: "Ignacio",
                     apellido: "Kyoli",
                     correo: "ignacio_123a@gmail.com",
-                    dni: "25894569"
+                    dni: "25894569",
+                    foto:  "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/2_avatar-128.png"
                 },
                 {
                     nombre: "Sol",
                     apellido: "Forci",
                     correo: "forci_sol@gmail.com",
-                    dni: "40256389"
+                    dni: "40256389",
+                    foto:  "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/11_avatar-128.png"
                 },
+                {
+                    nombre: "Agustin",
+                    apellido: "Lopez",
+                    correo: "lopezagustin128@gmail.com",
+                    dni: "50821362",
+                    foto: "https://cdn3.iconfinder.com/data/icons/business-avatar-1/512/3_avatar-128.png"
+                }
             ]
-
         },
+
         computed: {
             
             personasPorNombreYDni() {
@@ -125,6 +138,7 @@
                 return arrayDePersonas
             }
         },
+
         methods: {
             getNombreCompleto(persona) {
                 return `${persona.nombre} ${persona.apellido}`
