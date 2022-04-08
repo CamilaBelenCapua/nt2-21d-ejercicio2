@@ -12,14 +12,23 @@
 
 </head>
 
-
 <div class="container-fluid mt-3" id="app">
-    <input type="text" class="form-control" v-model="criterioDeBusqueda"
-        placeholder="Ingresar un criterio de busqueda...">
+    <input type="text" class="form-control"  pattern="[a-zA-Z]+" v-model="criterioPorNombre"
+        placeholder="Ingresar nombre o apellido">
+
     <br>
+
+    <input type="number" class="form-control" v-model="criterioPorDni" pattern="[0-9]+"
+        placeholder="Ingresar el documento...">
+    </br>
+
+    <div class="alert alert-danger" role="alert" v-if="showAlert">
+        {{alertMessage}}
+    </div>
+
     <div class="card-deck m-0">
         <div class="row">
-            <div class="col" v-for="persona in personasFiltradas">
+            <div class="col" v-for="persona in personasPorNombreYDni">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">{{getNombreCompleto(persona)}}</h5>
@@ -39,8 +48,14 @@
     new Vue({
         el: '#app',
         data: {
-            criterioDeBusqueda: '',
-            //Aquí, en este array es donde tienen que agregar su información
+            criterioPorNombre: '',
+            criterioPorDni: '',
+
+            showAlert: false,
+            alertMessage: '',
+
+    
+
             personas: [
                 {
                     nombre: "Daniel",
@@ -49,20 +64,65 @@
                     dni: "20442873"
                 },
                 {
-                    nombre: "...",
-                    apellido: "...",
-                    correo: "...",
-                    dni: "..."
+                    nombre: "Camila Belén",
+                    apellido: "Capua",
+                    correo: "camilabelencapua@gmail.com",
+                    dni: "35894524"
+                },
+                {
+                    nombre: "Agustin",
+                    apellido: "Lopez",
+                    correo: "ag_lopez@gmail.com",
+                    dni: "38843318"
+                },
+                {
+                    nombre: "Ignacio",
+                    apellido: "Kyoli",
+                    correo: "ignacio_123a@gmail.com",
+                    dni: "25894569"
+                },
+                {
+                    nombre: "Sol",
+                    apellido: "Forci",
+                    correo: "forci_sol@gmail.com",
+                    dni: "40256389"
                 },
             ]
 
         },
         computed: {
-            personasFiltradas() {
-                return this.personas.filter((persona) => {
-                    let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
-                    return registroCompleto.toLowerCase().includes(this.criterioDeBusqueda.toLowerCase())
-                });
+            
+            personasPorNombreYDni() {
+                let arrayDePersonas = this.personas
+                const patronDeChequeoLetras = /^[a-zA-Z]+$/
+                const cantidadCharDni = this.criterioPorDni.length
+                const cantidadCharNombre = this.criterioPorNombre.length
+                const minChar = 3
+
+                if((cantidadCharDni < minChar && cantidadCharDni != 0) || 
+                (cantidadCharNombre < minChar && cantidadCharNombre != 0)){
+                   
+                    if(cantidadCharDni < minChar && cantidadCharNombre < minChar){
+                        this.alertMessage= 'El dni y el nombre deben tener mas de 3 caracteres'
+                    }else if (cantidadCharDni < minChar){
+                        this.alertMessage= 'El dni deben tener mas de 3 caracteres'
+                    }else{
+                        this.alertMessage= 'El nombre deben tener mas de 3 caracteres'
+                    }
+                    this.showAlert = true;
+
+                }else{
+                    this.showAlert = false;
+                }
+ 
+                if (this.criterioPorDni > 0 || patronDeChequeoLetras.test(this.criterioPorNombre)){
+                    arrayDePersonas = this.personas.filter((persona) => {
+                        let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
+                        return registroCompleto.toLowerCase().includes(this.criterioPorDni.toLowerCase()) && registroCompleto.toLowerCase().includes(this.criterioPorNombre.toLowerCase())
+                    })
+                }
+                
+                return arrayDePersonas
             }
         },
         methods: {
@@ -72,3 +132,6 @@
         }
     });
 </script>
+
+
+
