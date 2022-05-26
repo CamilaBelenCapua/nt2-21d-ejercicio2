@@ -55,8 +55,6 @@
             showAlert: false,
             alertMessage: '',
 
-    
-
             personas: [
                 {
                     nombre: "Daniel",
@@ -133,8 +131,7 @@
                         let registroCompleto = `${persona.nombre} ${persona.apellido} ${persona.dni} ${persona.correo}`
                         return registroCompleto.toLowerCase().includes(this.criterioPorDni.toLowerCase()) && registroCompleto.toLowerCase().includes(this.criterioPorNombre.toLowerCase())
                     })
-                }
-                
+                }                
                 return arrayDePersonas
             }
         },
